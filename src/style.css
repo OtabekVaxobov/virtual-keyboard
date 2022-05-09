@@ -41,9 +41,8 @@ textarea {
   border: 1px solid #eeeeee;
 }
 .btn:active {
-  background-color: #eeeeee;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
+  background-color: red;
+  border: 1px solid #eeeeee;
 }
 
 #Backspace {
@@ -54,7 +53,7 @@ textarea {
   grid-column: span 3;
 }
 
-#backslash {
+#Backslash {
   grid-column: span 3;
 }
 
@@ -66,19 +65,22 @@ textarea {
   grid-column: span 4;
 }
 
-#Shift {
+#ShiftRight {
   grid-column: span 3;
 }
 
-#Shift_left {
+#ShiftLeft {
   grid-column: span 5;
 }
 
-#Ctrl {
+#ControlLeft {
   grid-column: span 3;
 }
+#ControlRight {
+  grid-column: span 2;
+}
 
-#Win {
+#MetaLeft {
   grid-column: span 3;
   font-size: 14px;
 }
