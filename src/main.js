@@ -101,27 +101,27 @@
     'Backslash',
     //
     'CapsLock',
-    'a',
-    's',
-    'd',
-    'f',
-    'g',
-    'h',
-    'j',
-    'k',
-    'l',
+    'A',
+    'S',
+    'D',
+    'F',
+    'G',
+    'H',
+    'J',
+    'K',
+    'L',
     ';',
     'Backquote',
     'Enter',
     //
     'ShiftLeft',
-    'z',
-    'x',
-    'c',
-    'v',
-    'b',
-    'n',
-    'm',
+    'Z',
+    'X',
+    'C',
+    'V',
+    'B',
+    'N',
+    'M',
     ',',
     '.',
     '/',
@@ -150,13 +150,12 @@
   document.body.appendChild(input);
   document.body.appendChild(div);
   //
-  let Cap_changer = false;
 
-  function SupperMupper(Cap_changer) {
+  function SupperMupper() {
     return Cap_changer ? EngKeys_UpperCase : EngKeys;
   }
   //   console.log(SupperMupper());
-  //
+
   SupperMupper().forEach((item) => {
     let list = document.getElementById('keyboard');
     let button = document.createElement('button');
@@ -209,7 +208,13 @@
         break;
     }
   });
-
+  function Cap_changer() {
+    if (localStorage.getItem('CapsLock')) {
+      localStorage.setItem('CapsLock', true);
+    } else {
+      localStorage.setItem('CapsLock', false);
+    }
+  }
   document.querySelectorAll('.btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       let text = document.getElementById('textarea');
@@ -225,10 +230,10 @@
           text.value += '\t ';
           break;
         case 'CapsLock':
-          Cap_changer = true;
+          Cap_changer();
           text.value += '';
           break;
-        case 'CapsLock':
+
         case 'MetaLeft':
         case 'ShiftRight':
         case 'ShiftLeft':
@@ -257,8 +262,14 @@
   document.querySelector('body').onkeydown = (event) => {
     let code = event.code;
     let key = event.key;
-    // console.log(event);
+
+    if (code === 'CapsLock') {
+      Cap_changer();
+      console.log(localStorage.CapsLock);
+    }
+
     if (
+      code === 'MetaLeft' ||
       code === 'Backslash' ||
       code === 'ShiftLeft' ||
       code === 'ShiftRight' ||
