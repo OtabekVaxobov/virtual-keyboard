@@ -1,4 +1,4 @@
-(function () {
+(() => {
   const EngKeys = [
     '`',
     '1',
@@ -151,16 +151,16 @@
   document.body.appendChild(div);
   //
 
-  function SupperMupper() {
-    return Cap_changer ? EngKeys_UpperCase : EngKeys;
-  }
-  //   console.log(SupperMupper());
-
+  SupperMupper = () => {
+    return JSON.parse(localStorage.getItem('CapsLock'))
+      ? EngKeys
+      : EngKeys_UpperCase;
+  };
+  console.log(SupperMupper());
   SupperMupper().forEach((item) => {
-    let list = document.getElementById('keyboard');
     let button = document.createElement('button');
     button.innerText = item;
-    list.appendChild(button);
+    document.getElementById('keyboard').appendChild(button);
     button.className = 'btn';
     button.id = item;
     switch (item) {
@@ -179,27 +179,21 @@
       case 'Backquote':
         button.innerText = `'`;
         break;
-      case 'ShiftRight':
-        button.innerText = 'Shift';
-        break;
       case 'ShiftLeft':
+      case 'ShiftRight':
         button.innerText = 'Shift';
         break;
       case 'Space':
         button.innerText = ' ';
         break;
-      case 'ControlRight':
-        button.innerText = 'Ctrl';
-        break;
       case 'ControlLeft':
+      case 'ControlRight':
         button.innerText = 'Ctrl';
         break;
       case 'MetaLeft':
         button.innerText = 'Win';
         break;
       case 'AltLeft':
-        button.innerText = 'Alt';
-        break;
       case 'AltRight':
         button.innerText = 'Alt';
         break;
@@ -208,13 +202,7 @@
         break;
     }
   });
-  function Cap_changer() {
-    if (localStorage.getItem('CapsLock')) {
-      localStorage.setItem('CapsLock', true);
-    } else {
-      localStorage.setItem('CapsLock', false);
-    }
-  }
+
   document.querySelectorAll('.btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       let text = document.getElementById('textarea');
@@ -230,10 +218,14 @@
           text.value += '\t ';
           break;
         case 'CapsLock':
-          Cap_changer();
           text.value += '';
+          pressCustom();
           break;
-
+        case 'ArrowUp':
+        case 'ArrowLeft':
+        case 'ArrowDown':
+        case 'ArrowRight':
+        //
         case 'MetaLeft':
         case 'ShiftRight':
         case 'ShiftLeft':
@@ -250,7 +242,7 @@
           text.value = text.value.slice(0, -1);
           break;
         case 'Backslash':
-          text.value += `'\\'`;
+          text.value += '\\';
           break;
         default:
           text.value += btn.id;
@@ -259,15 +251,25 @@
     });
   });
 
+  const pressCustom = () => {
+    if (JSON.parse(localStorage.getItem('CapsLock'))) {
+      localStorage.setItem('CapsLock', false);
+      SupperMupper();
+      //
+    } else {
+      localStorage.setItem('CapsLock', true);
+      SupperMupper();
+      //
+    }
+    console.log(localStorage.getItem('CapsLock'));
+  };
+
   document.querySelector('body').onkeydown = (event) => {
     let code = event.code;
     let key = event.key;
-
     if (code === 'CapsLock') {
-      Cap_changer();
-      console.log(localStorage.CapsLock);
+      pressCustom();
     }
-
     if (
       code === 'MetaLeft' ||
       code === 'Backslash' ||
@@ -295,4 +297,5 @@
       return '';
     }
   };
+  //
 })();
